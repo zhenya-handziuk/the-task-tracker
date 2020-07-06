@@ -1,0 +1,51 @@
+version: '3.7'
+
+services:
+  api:
+    container_name: tracker-api
+    build:
+      context: .
+      args:
+        - PORT=${PORT}
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - postgres
+    restart: always
+    env_file:
+      - .env
+    command: npm start
+    dns_search: .
+  postgres:
+    container_name: postgres
+    image: postgres:12.2
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - postgres-volume:/var/lib/postgresql/data
+    dns_search: .
+  redis:
+    container_name: tracker-api-redis
+    image: redis:6.0
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - redis-volume:/data
+    dns_search: .
+    command: [
+      'bash',
+      '-c',
+      '
+        docker-entrypoint.sh
+        --requirepass "$$REDIS_PASSWORD"
+        ',
+    ]
+
+volumes:
+  postgres-volume:
+  redis-volume:

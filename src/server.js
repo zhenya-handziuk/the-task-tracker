@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const healthRouter = require('./routers/HealthRouter');
+const userRouter = require('./routers/UserRouter');
+const taskRouter = require('./routers/TaskRouter');
+const swaggerRouter = require('./routers/SwaggerRouter');
 
 
 const app = express();
@@ -12,10 +15,17 @@ const PORT = process.env.PORT;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/api/v2', [
-    healthRouter
+//Swagger
+app.use(swaggerRouter);
+
+app.use('/api/v1', [
+    healthRouter,
+    userRouter,
+    taskRouter
 ]);
 
-app.listen(PORT || 3000, () => {
+const server = app.listen(PORT || 3000, () => {
     console.log(`Server work in port ${PORT}`);
 })
+
+module.exports = server;

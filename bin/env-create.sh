@@ -24,6 +24,6 @@ if [ ! -f "${CONF_DIR}"../.env ]; then
     echo "PGPORT=${POSTGRES_PORT:-5432}"
     echo "PGUSER=${POSTGRES_USER:-development}"
     echo "PGPASSWORD=${POSTGRES_PASSWORD:-develop}"
-    echo "PGDATABASE=${POSTGRES_DB:-tov_development}"
+    echo "PGDATABASE=${POSTGRES_DB:-development}"
   } >> "${CONF_DIR}"./.env
 fi

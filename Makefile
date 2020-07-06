@@ -1,5 +1,3 @@
-env-create:
-	./bin/env-create.sh
 up:
 	docker-compose up --build -d
 log:
@@ -8,3 +6,5 @@ down:
 	docker-compose down
 exec:
 	docker-compose exec api /bin/bash
+test:
+	docker-compose run --rm api npm run test
